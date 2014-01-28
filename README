@@ -1,0 +1,308 @@
+######################################################################
+######################################################################
+
+	README --- IMPORTANT
+
+######################################################################
+######################################################################
+
+
+
+######################################################################
+######################################################################
+	
+--- MANIFESTO ---
+ 
+This Framework wants to be a pure representation of the MVC pattern. It used PHP, MYSQL, XSLT and XML to reach his goal. For the PHP part, it implements the concept of namespaces, interfaces and the PDO extension for accessing the Database. Informations is stock in MYSQL. For the View in MVC, the Framework use XSLT, separating completely the view from the logic. Every request is treat as a route by the front controller, the Router and then dispatch to a secondary controller that fetch the data using Models over the Database and pass them to the XSLT processor as XML data. The view then use XSL templates over the XML and render the view. At the end you can use a Response object to control the headers and even the HTTP caching.
+
+
+######################################################################
+######################################################################
+
+
+
+Sections
+1. Installation
+2. Usage
+3. Deployement
+4. FAQ
+5. Best Practices
+
+
+
+
+######################################################################
+### Installation
+######################################################################
+
+1- Install the framework folder on your server
+
+2- Create the database in MySQL for your project
+
+3- Change the database credentials in config.php
+example: 
+define('HOST', 'localhost');
+define('USER', 'root');
+define('PASSWORD', 'root');
+define('DATABASE', 'MY_DATABASE_NAME');
+
+4- Run http://localhost{PORT_NUMBER}/{PATH_TO_APP}/.update-routes.php in your browser
+
+5- Go to http://localhost{PORT_NUMBER}/{PATH_TO_APP}/ to see the main page
+
+
+
+
+######################################################################
+### Usage
+######################################################################
+
+The framework works like a router, every action is a predefined route. If you want to add routes, add them in Migrations/routes.sql, and run in your browser http://localhost/.update-routes.php
+
+1- Adding a route: You need to know the HTTP method, the route path, the controller name, the action name
+examples:  
+GET about MainController about 
+GET products/:id ProductsController show
+POST products/update ProductsController update
+
+You can use the wild cards (:id) to pass parameters in the controller action
+=> GET categories/:id/products/:id ProductsController show
+=> ProductsController::show($category_id, $product_id)
+
+
+2- Add the controller in App/Controllers folder. When creating a file on the framework, always make sure to use all the needed namespace and put the right namespace of the file it self. Namespaces matches the directory architecture from the root. Also the add security on your file, make sure to add this line after the namespace declaration: 
+defined('CORE_EXEC') or die('Restriced Access');
+This line prevent loading independent file with passing by the index.php
+
+
+
+
+
+
+######################################################################
+### Deployement
+######################################################################
+
+When deploying the framework in production mode
+1- Set the ENVIRONMENT global in config.php to PRODUCTION.
+2- REMOVE Migrations folder, because it contains all your database architecture and all the routes of your framework, and you dont wnat that to be visible.
+3- REMOVE .update-routes.php
+
+
+
+
+######################################################################
+### FAQ
+######################################################################
+
+-------------------------------
+---  How to create a view ? --- 
+-------------------------------
+1- First create a folder link to your controller in App/Views/
+example: if you have a ProductsController, create App/Views/Products/ folder
+
+2- Map the name the controller method to the name of the view file
+example: ProductsController::show, create App/Views/Products/show.xsl file
+
+3- Copy and paste the basic empty template example xsl file in App/Views/Templates/empty.xsl
+Also feel free to create your own templates. 
+By default all views files are parent with the App/Views/Templates/app_template.xsl file. 
+So the view file that you a creating is only a partial from the app_template file. 
+This extension pattern can also be used in your own partials
+example: new.xsl and edit.xsl are two partials that use the same form
+
+4- The content of the first child partial from the app_template is contain in the xsl:template that match the XML_PARTIAL_CONTAINER (as you can see in the empty.xsl file)
+
+5- The App/Views/Templates/app_template.xsl file is the default template and container of your app. But there is nothing mandatory about this file and feel free to modify it. It is also where you will put all your CSS and JavaScript dependencies. The only IMPORTANT thing is that the content must go in the XML_PARTIAL_CONTAINER. 
+example: if you want to divise your app with an admin section, you could create a template file call App/Views/Templates/admin_template.xsl and extends your views with that template.
+
+6- Views file use the XSLT programming language version 1.0, as a recommandation of the W3. Be sure to try to get confortable with it and XPath expression to get the content from the XML data that you will pass in the view throught the View::bind method.
+
+
+
+------------------------------------------
+--- How to create a custom component ? ---
+------------------------------------------
+1- To add a component for your app, create a folder un App/Components/ with the name of your component.
+
+2- Add all the classes needed for this component, create an Exceptions/ folder to put all your exceptions triggers by the classes in this component and create an Interfaces/ folder for all the interfaces of the classes of this component.
+
+3- Do not add component in the Framework/Components/ because this folder is where the udpates are made, so they will get erase. It also assure the principle that the framework is independent from the App. 
+
+4- The principe of Component is that you can develop them and re-use them, if the Framework is always the same.
+
+example: The app comes with a default SecureController in the App/Components/ folder. You can inspire yourself with this component for creating your own.
+
+
+
+
+-------------------------------------------------------------------
+--- Can multiple routes map to the same controller and action ? ---
+-------------------------------------------------------------------
+Yes, just add the routes in Migrations/route.sql
+example: 
+	-- index mapping
+	('GET', '',           'MainController', 'index'),
+	('GET', 'index',      'MainController', 'index'),
+	('GET', 'index.html', 'MainController', 'index'),
+	('GET', 'index.php',  'MainController', 'index')
+
+In this example, four different routes maps to MainController::index
+
+
+
+--------------------------------------
+--- How to pass data to the view ? ---
+--------------------------------------
+
+To pass data the the view, for example and array of products. Use the model function that fetch the data and the bind method from the view.
+example: $this->view->bind('Products', Product::all());
+example: $this->view->bind('Products', Product::find(array('category_id' => 2)));
+
+The bind method takes the name you want the parent node to be call, and the data. If the data if an array of array, it will make the child XML node to be the parent node name but in singular.
+example: $this->view->bind('Products', Product::all()); will make: 
+<Products>
+	<Product>
+		<id>1</id>
+		</name>Soulier</name>
+		<price>49.99</price>
+	</Product>
+	<Product>
+		<id>2</id>
+		</name>Raquette</name>
+		<price>109.95</price>
+	</Product>
+</Products>
+
+
+Here a comparaison of looping products list in PHP and in XSLT, you'll see that the difference is not to hard to understand.
+
+-- PHP
+<?php 
+foreach($products as $product) {
+	echo "<div id='{$product['id']}'>";
+	echo '<p>'.$product['name'].'</p>';
+	echo '<p>'.$product['price'].'</p>';
+	echo '</div>';
+}
+?>
+
+
+-- XSLT
+<xsl:for-each select="//Products/Product">
+	<div id="{id}">
+		<p><xsl:value-of select="name"/></p>
+		<p><xsl:value-of select="price"/></p>
+	</div>
+</xsl:for-each>
+
+The real good advantage of XSL is that the language is already an XML format.
+
+
+
+-------------------------------
+--- How to create a Model ? ---
+-------------------------------
+
+1- Create the SQL table format in Migrations/
+example: Products table
+
+-- Migrations/products.sql
+
+/*************************
+** Products Table
+*************************/
+drop table if exists products;
+create table products (
+	id int not null auto_increment primary key,
+	category_id int,
+	name varchar(100),
+	price float,
+	description text
+);
+
+
+2- Run the content of this file in your database. Generally throught PHPMyAdmin.
+
+3- Create a Model file in App/Models/. All models MUST implements the TABLE_NAME constant and the validate function. Also all properties MUST be the same as the SQL schema (same name also).
+example: Product Model
+
+-- App/Models/Product.php
+
+<?php
+
+namespace App\Models;
+use Framework\Components\Model\Model;
+
+defined('CORE_EXEC') or die('Restricted Access');
+
+
+class Product extends Model {
+	
+	const TABLE_NAME = 'products';
+
+	public $id;
+	public $category_id;
+	public $name;
+	public $price;
+	public $description;
+
+
+	public function validate () {
+		return true;
+	}
+}
+
+
+
+4- Use the namespace of your new Model in the Controller that use it.
+example: use App\Models\Product;
+
+
+
+
+######################################################################
+### Best Practices
+######################################################################
+
+1- Controllers file name and class name follow this format NameController and they MUST match.
+example: App/Controllers/MainController.php and MainController
+
+2- Resources Controller should always be plural
+example: ProductsController and NOT ProductController
+
+3- Views folder match the name of the controller without the suffix Controller.
+example: ProductsController.php => App/Views/Products/
+
+4- Model file name and class name are sigular and they MUST match.
+example: App/Models/User.php and User
+
+5- All controller file MUST have this line after the namespace declaration.
+defined('CORE_EXEC') or die('Restricted Access');
+
+6- When creating links and references in the views files, always use absolute link, prefixing the $HTTP_LOCATION parameter.
+example: <link rel="stylesheet" type="text/css" href="{$HTTP_LOCATION}public/css/main.css"/>
+
+7- Model primary key is ALWAYS call $id and in sql it MUST be implement as: id int not null auto_increment primary key
+
+8- Model foreign key have this format name_id.
+example: $category_id
+
+9- Use view parameters in Controllers, it has a great power. Just remember to add them to your XSL templates files.
+example: $this->view->set('title', 'My Super Title'); - set the title of the page
+example: $this->view->set('css-styling', 'bootstrap'); - changing css style on the fly
+
+10- When the controller::method is call over a POST route, make the function static
+example: ProductsController::create => public static function create () {}
+
+11- For more control over the response sent by the framework, use the controller response object.
+see the App/Controllers/MainController::index for example
+
+12- Do not put the ending php tag '?>' at the end of your php file. ZEND recommandation for speeding php script.
+					
+13- If you absolutly need to pass raw html in the view, use $this->view->set('param_name', '<p>my raw HTML</p>'); And in the XSL template, you <xsl:value-of disable-output-escaping='yes' select="$param_name"/> to output as HTML.
+
+
+
+
+
