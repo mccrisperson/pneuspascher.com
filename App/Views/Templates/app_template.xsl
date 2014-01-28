@@ -42,6 +42,8 @@
 			<meta name="keywords" content="{$keywords}"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+			<!-- FAVICON -->
+      <link href="{$HTTP_LOCATION}public/images/arrow-full.png" rel="icon" type="image/x-icon" />
 
 	    <!-- PAGE TITLE -->
 			<title><xsl:value-of select="$title"/></title>

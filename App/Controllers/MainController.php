@@ -35,9 +35,7 @@ class MainController extends AppController {
 	public function index () {
 		
 		// Define extra view parameters
-		$this->view->set('title', 'Main Page Title');
-		$this->view->set('description', 'This is the meta description');
-		$this->view->set('keywords', 'Choose your words wisely');
+		$this->view->set('title', 'Pneus pas cher');
 		
 		// Render the view
 		$content = $this->view->render('App/Views/Main/index');
@@ -45,15 +43,9 @@ class MainController extends AppController {
 		// Use setContent to add the content to your response
 		$this->response->setContent($content);
 		
-		// Use setContentType to set the content type of your response. Optional
-		$this->response->setContentType('text/html');
-
-		// Use setCaching to activate the HTTP caching in seconds on the client browser. Optional
-		$this->response->setCaching(10);
-
 		// Send the respone
-		return $this->response->send();
-	}
+		$this->response->send();
+ 	}
 }
 
 
