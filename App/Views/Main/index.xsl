@@ -7,9 +7,12 @@
 
 
 <xsl:include href="../Templates/app_template.xsl"/>
+<xsl:include href="_slider.xsl"/>
 
 <xsl:template match="XML_PARTIAL_CONTAINER">
-	<h1>Welcome to your new App</h1>
+
+	<xsl:call-template name="slider"/>
+
 </xsl:template>
 
 </xsl:stylesheet>

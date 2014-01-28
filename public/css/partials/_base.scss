@@ -1,0 +1,760 @@
+/*
+*
+*	Search for (CTRL+F)
+*	VARIABLES
+*		h1-h6, a, input, legend, (basic elements' style)
+*		FORM
+*		MISC (float, clear, strong, border-box...)
+*		BASE (container)
+*	HEADERS
+*		top-head
+*		menu
+*	MAIN
+*		breadcrumbs
+*		panier
+*		PRODUCT
+*		PRODUCT-LIST
+*		PAYMENT-PROCESS
+*		PAYMENT
+*	FOOTER
+*		panier-footer
+*		main-footer
+*	ADMIN
+*
+*
+*
+*/
+
+/*-------------------- VARIABLES --------------------*/
+/*---------------------------------------------------*/
+h1, h2, h3, h4, h5, h6, p, blockquote, a, input {
+
+}
+
+h1, h2, h3, legend {
+	font-family: $typo-head;
+}
+
+h1, legend {
+	font-size: 2.75em;
+	margin: 1.4em 0;
+	line-height: 1em;
+	border-bottom: 2px solid $dark;
+	/*font-size: 2.75em;
+	line-height: 3.6em; /* 2.75em * 1.31em (base line-height) */
+}
+
+h2 {
+	font-size: 2.25em;
+	line-height: 2.95em; /* 2.25em * 1.31em (base line-height) */
+}
+
+h3 {
+	font-size: 1.88em;
+	line-height: 2.46em; /* 1.88em * 1.31em (base line-height) */
+}
+
+h4 {
+	font-size : 1.5em;
+	line-height: 1.965em; /* 1.5em * 1.31em (base line-height) */
+}
+
+h5 {
+	font-size : 1.13em;
+	line-height: 1.48em /* 1.13em * 1.31em (base line-height) */
+}
+
+p, label, input, blockquote, a:not(.button-flash) {
+	font-family: $typo-main;
+	font-size: 1em; /* standard 16px*/
+	line-height: 1.31em; /* 16px/21px = 1em/1.31em */
+}
+
+blockquote {
+	margin: 1em 0;
+	padding: 10px;
+	font-size: 0.8em;
+	color: $light;
+	background-color: $neutral;
+}
+
+a:not(.button-flash) {
+	@include transition;
+	color: $action2;
+
+	&:hover {
+		color: $contrast;
+	}
+}
+
+/* Main button style */
+.button-flash {
+	@include button-flash;
+}
+
+.inbound-link {
+	color: $neutral;
+	font-size: 0.8em;
+	line-height: 1.5em;
+	display: block;
+
+	&:hover {
+		color: $action2;
+	}
+}
+
+
+/* FORM */
+
+label {
+	display: block;
+	margin-top: 1em;
+
+	& + p {
+		color: $action;
+	}
+}
+
+.label-checkbox {
+	width: 350px;
+	label {
+		display: inline-block;
+		width: 91%;
+	}
+
+	input {
+		display: inline-block;
+	}
+}
+
+fieldset {
+	border: none;
+}
+
+input[type="text"], input[type="password"] {
+	min-width: 330px;
+}
+
+.submit-button {
+	margin: 3em 0;
+	padding: 1em 0;
+	width: 330px;
+	color: $light !important;
+
+	&:hover {
+		background-color: lighten($contrast, 15%);
+	}
+}
+
+input[type="textarea"] {
+	width: 330px;
+	height: 200px;
+	display: block;
+}
+/* MISC */
+
+strong {
+	font-weight: bold;
+}
+
+.alert {
+	border: 1px solid $action;
+}
+
+.button { /* button($from, $to, $radius, $padding-v, $padding-h)
+	@include button();*/
+}
+
+/* FIX */
+.fr {
+	float: right;
+}
+
+.fl  {
+	float: left;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.clear {
+	clear: both;
+}
+
+li {
+	list-style: none;
+}
+
+.helper {
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.chevron {
+	position: relative;
+	top: -3px;
+	font-size: 1.5em;
+	padding: 0 10px;
+}
+
+.bottom-gap {
+	padding-bottom: 32px !important;
+}
+
+/* BASE */
+
+.container {
+	width: 960px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
+
+/*-------------------- HEADER --------------------*/
+/*------------------------------------------------*/
+
+.sub-top {
+	background: lighten($neutral, 60%);
+	
+	.logo-wrap {
+		display: inline-block;
+		padding: 1em 0;
+		height: 135px;
+		width: 60%;
+	}
+
+	img {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.top-menu {
+		display: inline-block;
+		width: 36%;
+		text-align: right;
+
+		ul li {
+			display: inline-block;
+			vertical-align: middle;
+
+			&:first-child a {
+				@include bevel-before;
+			}
+
+			&:last-child a {
+				@include bevel-after;
+			}
+		}
+
+		a {
+			text-transform: uppercase;
+			font-family: $typo-head;
+			text-align: center;
+			height: 135px;
+			width: 160px;
+			display: block;
+			text-decoration: none;
+			color: $dark;
+			padding: 55px 30px;
+
+			&:hover {
+				background: lighten($neutral, 65%);
+			}
+
+			span {
+				font-size: 1.2em;
+				position: relative;
+				left: 10px;
+				top: 0px;
+			}
+		}
+	}
+}
+
+.menu-wrap {
+	position: relative;
+	z-index: 1000;
+	background: $dark;
+
+	li {
+		position: relative;
+		display: inline-block;
+		width: 19%;
+
+		a {
+			display: block;
+			color: $light;
+			text-transform: uppercase;
+			font-family: $typo-head;
+			text-align: center;
+			text-decoration: none;
+			padding: 1em 0;
+
+			&:hover {
+				/* Voir couleur ici */
+				color: $light;
+				background: lighten($dark, 25%);
+			}
+		}
+	}
+}
+
+/* Sub-menu */
+
+.menu-wrap > ul > li > ul {
+	display: none;
+	background-color: lighten($dark, 40%);
+	position: absolute;
+
+	li {
+		display: inline-block;
+		opacity: 0;
+		@include transition;
+	}
+}
+
+/* show sub ul */
+
+.menu-wrap ul li:hover > ul {
+	display: block;
+	background-color: lighten($dark, 40%);
+
+	li {
+		opacity: 1;
+		width: 100%;
+	}
+}
+
+/*----------------------- MAIN -----------------------*/
+/*----------------------------------------------------*/
+.breadcrumbs {
+	margin: 1em auto;
+}
+.main header {
+	width: 100%;
+
+	div {
+		display: inline-block;
+		width: 49%;
+
+		p {
+			text-align: right;
+		}
+	}
+}
+
+.panier-wrap {
+	clear: both;
+	table {
+		width: 100%;
+		border-bottom: 4px solid $dark;
+		
+		tr {
+			border-bottom: 1px solid $neutral;
+		}
+		
+		tr>td {
+			font-weight: bold;
+
+			& p {
+				font-weight: normal;
+			}
+		}
+
+		tr th:last-of-type, td:nth-child(3) {
+			text-align: left;
+			padding-left: 20px;
+
+			input {
+				min-width: 40px;
+				width: 40px;
+				text-align: right;
+			}
+		}
+
+		tr:first-child {
+			border-bottom: 4px solid $dark;
+
+			th {
+				text-align: left;
+				font-size: 1.88em;
+				line-height: 2em;
+			}
+		}
+		
+		tr td {
+			padding: 20px 0;
+		}
+		/* Description */
+		tr td p:first-of-type {
+			font-size: 1em;
+			margin-bottom: 1em;
+		}
+
+		/* Product code */
+		tr td p:last-of-type {
+			font-size: 0.8em;
+		}
+
+
+		img {
+			float: left;
+			width: 140px;
+			height: 130px;
+		}
+
+		* {
+			font-family: $typo-main;
+		}
+	} /* end of table */
+}
+
+.panier-proceed {
+	float: right;
+
+	h2 {
+		span {
+			font-weight: normal;
+			margin-left: 3em;
+		}
+	}
+}
+
+/* --------------- PRODUCT-WRAP ---------------*/
+.product-wrap {
+	.img-wrap {
+		float: left;
+		width: 40%;
+
+		img {
+			width: 100%;
+		}
+	}
+
+	.product-details {
+		margin-left: 3em;
+		padding: 3em;
+		float: left;
+		width: 52%;
+
+		.price {
+			h2, h3 {
+				display: inline-block;
+			}
+
+			h2 {
+				font-size: 2.7em;
+				margin-left: 0.3em;
+				color: $action;
+			}
+		}
+
+		.product-buy {
+			.submit-button {
+				padding: 0.5em 0.1em;
+				width: 49%;
+			}
+
+			a:last-of-type {
+				background-color: $action;
+				border: none;
+
+				&:hover {
+					background-color: lighten($action, 15%);
+				}
+			}
+		}
+	}
+}
+
+/* ---------------- PRODUCT-LIST -----------------*/
+
+.product-list {
+	margin: 0 auto;
+}
+
+div[class^="item"] {
+	float: left;
+	margin: 5px 5px;
+	width: 239px;
+	height: 250px;
+	border: 1px solid #ccc;
+	box-shadow: 2px 2px 2px #ccc;
+	border-radius: 5px;
+	overflow: hidden;
+
+	&:hover {
+		box-shadow: none;
+
+		.arriereplan_prix {
+			box-shadow: none;
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+			filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+			opacity: 1;
+		}
+	}
+}
+
+.imgProd {
+	margin-left: 50px;
+	margin-top: 5px;
+	width: 75%;
+}
+
+.arriereplan_prix {
+	position: relative;
+	bottom: 70px;
+	left: 0px;
+	z-index: 2;
+	margin: 0 auto;
+	border-radius: 5px;
+	width: 230px;
+	height: 50px;
+	background-color: #FA1200;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+	-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=70)';
+	opacity: .7;
+}
+
+.arriereplan_prix p {
+	text-align: center;
+	color: #FFF;
+	font-size: 24px;
+	padding-top: 8px;
+}
+
+/* --------------- PAYMENT-ROCESS ---------------*/
+
+.cart-process {
+	background-color: $dark;
+	color: $light;
+	
+	li {
+		font-family: $typo-main;
+		display: inline-block;
+		text-align: center;
+		width: 24%;
+		vertical-align: middle;
+		padding: 1.5em 0;
+
+		&:not(:last-child) {
+			background: transparent url(../img/arrow-full.png) no-repeat right center;
+		}
+	}
+}
+
+.shipping-address {
+	li {
+		display: inline-block;
+		margin-right: 33%;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	li p:first-child {
+		font-weight: bold;
+	}
+
+	li p:last-child {
+		margin-bottom: 1em;
+	}
+
+	li a:first-of-type {
+		display: block;
+		color: $light;
+		font-size: 1em;
+		margin-bottom: 1em;
+	}
+}
+
+/* ------------------ PAYMENT ------------------- */
+
+.main-summary section {
+	float: left;
+	width: 33.33333%;
+	padding-right: 20px;
+	margin-bottom: 6em;
+	
+	/* ADRESSE */
+	&:first-child {
+		p:first-of-type {
+			font-weight: bold;
+		}
+	}
+	
+	/* SOMMAIRE */
+	&:last-of-type {
+		padding-right: 0px;
+
+		p {
+			font-weight: bold;
+
+			span {
+				float: right;
+				font-weight: normal;
+			}
+			
+			/* total */
+			&:last-of-type {
+				border-top: 1px solid $neutral;
+				margin: 1em 0;
+				font-size: 1.2em;
+				margin-bottom: 3.5em;
+			}
+		}
+
+	}
+
+
+	h2 {
+		text-align: center;
+		border-bottom: 4px solid black;
+		line-height: 2em;
+		margin: 0.4em 0;
+	}
+}
+
+.main-summary .panier-wrap {
+	&>a {
+		width: 33%;
+		float: right;
+		margin: 2em 0;	
+	}
+
+	table tr td:last-of-type {
+		text-align: center;
+	}
+	
+}
+
+
+/*-------------------- FOOTER --------------------*/
+/*------------------------------------------------*/
+
+.panier-footer {
+	clear: both;
+	margin-top: 5em;
+	border-top: 4px solid black;
+	background-color: lighten($neutral, 60%);
+
+	.service-footer, .confiance-footer {
+		font-family: $typo-main !important;
+		display: inline-block;
+		vertical-align: top;
+		width: 49%;
+		padding-bottom: 3em;
+
+		&:first-child {
+			border-right: 1px solid $neutral;
+		}
+
+		img {
+			width: 30px;
+			height: 30px;
+			margin-right: 10px;
+			display: inline-block;
+			border: 1px solid $action;
+		}
+	}
+}
+
+.main-footer {
+	padding-top: 1.5em;
+	background-color: $dark;
+	color: $light;
+	padding-bottom: 1em;
+
+	.social {
+		display: inline-block;
+		text-align: center;
+		width: 50%;
+	}
+
+	.contact {
+		display: inline-block;
+		vertical-align: top;
+		padding-top: 1em;
+		text-align: center;
+		width: 49%;
+	}
+
+	.menu-footer {
+		margin-top: 8em;
+		text-align: center;
+		li {
+			display: inline-block;
+			padding: 0 1em;
+
+
+			a {
+				text-decoration: none;
+				color: $light;
+
+				&:hover {
+					color: darken($light, 20%);
+				}
+			}
+		}
+	}
+
+	& > p {
+		text-align: center;
+		margin-top: 3em;
+		font-size: 0.8em;
+		color: $neutral;
+	}
+
+
+}
+
+/* -------------- ADMIN ---------------- */
+/* ------------------------------------- */
+
+.admin-connect {
+	width: 400px;
+	margin: 0 auto;
+
+	form input {
+		width: 100%;
+	}
+}
+
+.admin-footer {
+	padding-top: 3em;
+}
+
+/* Sub-menu */
+
+.menu-admin > ul > li > ul {
+	display: none;
+	background-color: lighten($dark, 40%);
+	position: absolute;
+
+	li {
+		display: inline-block;
+		opacity: 0;
+		@include transition;
+	}
+}
+
+/* show sub ul */
+
+.menu-admin ul li:hover > ul {
+	display: block;
+	background-color: darken($light, 10%);
+
+	li {
+		opacity: 1;
+		width: 100%;
+
+		&:hover {
+			background-color: darken($light, 25%);
+		}
+	}
+}

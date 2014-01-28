@@ -1,0 +1,18 @@
+@mixin button-flash {
+	display: block;
+	font-family: $typo-main;
+	background-color: $action;
+	text-align: center;
+	border-radius: 5px;
+	color: white;
+	text-decoration: none;
+	font-size: 1.5em;
+	line-height: 2.5em;
+	@include transition;
+
+	&:hover {
+		color: $light;
+		background-color: lighten($action, 15%);
+		text-decoration: none;
+	}
+}

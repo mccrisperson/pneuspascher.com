@@ -1,0 +1,20 @@
+/* Change parameters only when in bootstrap elements */
+/* Use _base.scss otherwise */
+
+.bs-register {
+	color: $light !important;
+	width: 100% !important;
+}
+
+.well {
+	padding-bottom: 2em;
+}
+
+.btn, .btn-primary {
+	/* voir submit-button dans _base.scss */
+}
+
+.form-horizontal .control-label {
+	text-align: left;
+	margin-bottom: 0.5em;
+}

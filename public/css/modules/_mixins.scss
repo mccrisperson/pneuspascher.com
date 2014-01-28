@@ -1,0 +1,39 @@
+@mixin gradient ($from, $to) {
+	background-color: $from;
+	background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+	background-image: -webkit-linear-gradient(top, $from, $to);
+	background-image:    -moz-linear-gradient(top, $from, $to);
+	background-image:      -o-linear-gradient(top, $from, $to);
+	background-image:         linear-gradient(to bottom, $from, $to);
+}
+
+@mixin transition() {
+		/*for type http://easings.net/*/
+		-webkit-transition: all 0.1s ease-in;
+		-moz-transition: all 0.1s ease-in;
+		-o-transition: all 0.1s ease-in;
+		transition: all 0.1s ease-in;
+}
+
+@mixin bevel-before() {
+	border-left: 1px solid lighten($neutral, 30%);
+	border-right: 1px solid lighten($neutral, 30%);
+	box-shadow: 1px 0 1px 1px $light inset;
+}
+
+@mixin bevel-after() {
+	border-right: 1px solid lighten($neutral, 30%);
+	box-shadow: 1px 0 1px 1px $light inset;
+}
+
+@mixin alpha60 {
+	/* Fallback for web browsers that don't support RGBa */
+    background-color: rgb(0, 0, 0);
+    /* RGBa with 0.6 opacity */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    /* For IE 8*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";	
+}
+

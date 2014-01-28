@@ -9,6 +9,11 @@
 <xsl:output method="html" indent="no" omit-xml-declaration="yes"/>
 
 
+<!-- Includes -->
+<xsl:include href="header.xsl"/>
+<xsl:include href="footer.xsl"/>
+
+
 <!-- Templates paramters -->
 <xsl:param name="HTTP_LOCATION"/>
 <xsl:param name="title" select="'MyApp'"/>
@@ -35,24 +40,52 @@
 			<meta charset="utf-8"/>
 			<meta name="description" content="{$description}"/>
 			<meta name="keywords" content="{$keywords}"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 
 	    <!-- PAGE TITLE -->
 			<title><xsl:value-of select="$title"/></title>
 
 			<!-- CSS DEPENDECIES -->
 			<link rel="stylesheet" type="text/css" href="{$HTTP_LOCATION}public/css/main.css"/>
+			<link rel="stylesheet" type="text/css" href="{$HTTP_LOCATION}public/css/styles.css"/>			
+      <link rel="stylesheet" type="text/css" href="{$HTTP_LOCATION}public/plugins/bxslider/jquery.bxslider.css"/>
+      <script type="text/javascript" src="{$HTTP_LOCATION}public/js/jquery-1.9.1.min.js"></script>
 
+      <script>
+	      $( document ).ready(function() {
+          $('.bxslider').bxSlider({
+              minSlides: 2,
+              maxSlides: 2,
+              slideWidth: 460,
+              slideMargin: 10,
+              moveSlides: 1,
+              pager: false
+          });
+
+          $('.main-slider').bxSlider({
+              auto: true,
+              controls : false,
+          });
+	      });
+      </script>
 		</head>
 
 		<body>
 
 			<!-- MAIN WRAPPER -->
 			<div id="wrapper">
+				<xsl:call-template name="header"/>
 				<xsl:apply-templates select="//XML_PARTIAL_CONTAINER"/>
+				<xsl:call-template name="footer"/>
 			</div>
 
 			<!-- JAVASCRIPT DEPENDENCIES -->
 			<script type="text/javascript" src="{$HTTP_LOCATION}public/js/main.js"/>
+      <script type="text/javascript" src="{$HTTP_LOCATION}public/plugins/bxslider/jquery.bxslider.min.js"></script>
+
+      <script type="text/javascript" src="{$HTTP_LOCATION}public/js/bootstrap.min.js"></script>
+
 
 		</body>
 

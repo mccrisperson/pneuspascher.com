@@ -1,0 +1,2 @@
+cd Dropbox/e1295794/Session5/Projet/Code/alpha2/css
+sass --watch --style expanded main.scss:styles.css
