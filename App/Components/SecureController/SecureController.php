@@ -90,6 +90,7 @@ abstract class SecureController extends Controller implements ISecureController 
 		parent::__construct();
 		if (isset($this->view)) {
 			$this->view->set('SECURE_KEY', CORE_EXEC);
+			$this->view->set('SESSION_PRIVILEDGE_LEVEL', Session::read('SESSION_PRIVILEDGE_LEVEL'));
 		}
 		if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 			if (!isset($_POST['secure_key']) || $_POST['secure_key'] != CORE_EXEC) {

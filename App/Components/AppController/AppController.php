@@ -46,6 +46,8 @@ abstract class AppController extends SecureController implements IAppController 
 			$this->view->set('SESSION_PRIVILEDGE', Session::read('SESSION_PRIVILEDGE_LEVEL'));
 			$this->view->set('FLASH_TYPE', $this->flash->getType());
 			$this->view->set('FLASH_MESSAGE', $this->flash->getMessage());
+			$this->view->set('USER_NAME', Session::read('USER.name'));
+			$this->view->set('USER_ID', Session::read('USER.id'));
 		}
 
 	}

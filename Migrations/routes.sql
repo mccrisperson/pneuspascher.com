@@ -12,7 +12,22 @@ create table routes (
 
 insert into routes (method, route, controller, action) values 
 
-	-- Statics Pages --
+	('GET', 'signin',      'UsersController', 'signin'),
+	('GET', 'signin.html', 'UsersController', 'signin'),
+	('GET', 'signin.htm',  'UsersController', 'signin'),
+	('GET', 'signin.php',  'UsersController', 'signin'),
+
+	('POST', 'login', 'UsersController', 'login'),
+
+	('GET', 'signup',      'UsersController', 'signup'),
+	('GET', 'signup.html', 'UsersController', 'signup'),
+	('GET', 'signup.htm',  'UsersController', 'signup'),
+	('GET', 'signup.php',  'UsersController', 'signup'),
+	
+	('POST', 'register', 'UsersController', 'register'),
+
+	('POST', 'signout', 'UsersController', 'signout'),
+
 
 	-- index mapping
 	('GET', '',           'MainController', 'index'),

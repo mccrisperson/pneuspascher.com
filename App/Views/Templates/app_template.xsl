@@ -12,6 +12,8 @@
 <!-- Includes -->
 <xsl:include href="header.xsl"/>
 <xsl:include href="footer.xsl"/>
+<xsl:include href="flash.xsl"/>
+<xsl:include href="post_link.xsl"/>
 
 
 <!-- Templates paramters -->
@@ -19,7 +21,12 @@
 <xsl:param name="title" select="'MyApp'"/>
 <xsl:param name="description" select="'Set a small description of the page'"/>
 <xsl:param name="keywords" select="'Some, relevant, keywords'"/>
-<xsl:param name="flash" select="''"/>
+<xsl:param name="FLASH_MESSAGE" select="''"/>
+<xsl:param name="FLASH_TYPE" select="''"/>
+<xsl:param name="SESSION_PRIVILEDGE_LEVEL" select="3"/>
+<xsl:param name="USER_ID"/>
+<xsl:param name="USER_NAME"/>
+
 
 
 <!-- Disable default text output for no-matching node -->
@@ -78,6 +85,10 @@
 			<!-- MAIN WRAPPER -->
 			<div id="wrapper">
 				<xsl:call-template name="header"/>
+				<xsl:call-template name="flash">
+					<xsl:with-param name="message" select="$FLASH_MESSAGE"/>
+					<xsl:with-param name="type" select="$FLASH_TYPE"/>
+				</xsl:call-template>
 				<xsl:apply-templates select="//XML_PARTIAL_CONTAINER"/>
 				<xsl:call-template name="footer"/>
 			</div>
