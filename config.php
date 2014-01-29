@@ -31,7 +31,7 @@ define('ENVIRONMENT', TEST_PRODUCTION);
  */
 define('HOST', 'localhost');
 define('USER', 'root');
-define('PASSWORD', 'root');
+define('PASSWORD', '');
 define('DATABASE', 'pneuspascher');
 
 

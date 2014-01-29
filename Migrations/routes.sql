@@ -13,7 +13,12 @@ create table routes (
 insert into routes (method, route, controller, action) values 
 
 	-- Statics Pages --
-
+	-- ('GET', 'brands/show-all.asp', 'BrandController', 'afficheBrands'),
+	-- ('GET', 'brands/show/:id', 'BrandController', 'showBrand'),
+	-- ('GET', 'brands/new', 'BrandController', 'addBrand'),
+	-- ('POST', 'brands/create', 'BrandController', 'createBrand'),
+	('GET', 'product/detail', 'CrisTestController', 'showProduct'),
+	('GET', 'products/all', 'CrisTestController', 'showAllProduct'),
 	-- index mapping
 	('GET', '',           'MainController', 'index'),
 	('GET', 'index',      'MainController', 'index'),

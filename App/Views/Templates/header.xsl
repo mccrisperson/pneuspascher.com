@@ -26,13 +26,13 @@
 	</div> <!-- end of top -->
 	<div class="menu-wrap">
 		<ul class="container">
-			<li><a href="index.php">Accueil</a></li>
-			<li><a href="productlist.php">Pneus</a>
+			<li><a href="{$HTTP_LOCATION}">Accueil</a></li>
+			<li><a href="{$HTTP_LOCATION}products/all">Pneus</a>
 			<!-- Sub menu -->
 					<ul>
-						<li><a href="productlist.php">Par véhicule</a></li>
-						<li><a href="productlist.php">Par dimension</a></li>
-					</ul>
+						<li><a href="{$HTTP_LOCATION}products/all">Par véhicule</a></li>
+						<li><a href="{$HTTP_LOCATION}products/all">Par dimension</a></li>
+					</ul> 
 			</li>
 			<li><a href="productlist.php">Promotions</a></li>
 			<li><a href="faq.php">F.A.Q.</a></li>
